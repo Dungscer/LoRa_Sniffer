@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frame Browser — RTL-SDR Listener</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header>
+    <span class="site-title">RTL-SDR Listener</span>
+    <nav>
+      <a href="/">Live</a>
+      <a href="/frames" class="active">Frames</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="card-header"><span>Filters</span></div>
+      <form id="filter-form" class="filter-form">
+        <label>From <input type="datetime-local" id="f-since" name="since"></label>
+        <label>To   <input type="datetime-local" id="f-until" name="until"></label>
+        <label>Freq min (MHz) <input type="number" id="f-freq-min" name="freq_min" step="0.001" placeholder="867.0"></label>
+        <label>Freq max (MHz) <input type="number" id="f-freq-max" name="freq_max" step="0.001" placeholder="869.0"></label>
+        <label>Min RSSI (dBm) <input type="number" id="f-rssi" name="min_rssi" step="1" placeholder="-120"></label>
+        <div class="filter-actions">
+          <button type="submit" class="btn">Apply</button>
+          <button type="button" class="btn btn-ghost" onclick="resetFilters()">Reset</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <span>Frames <span id="result-count" class="muted"></span></span>
+        <div class="actions">
+          <a id="export-zip" href="/api/export" class="btn">Export ZIP (JSON + PCAP)</a>
+          <a id="export-pcap" href="/api/export/pcap" class="btn">Export PCAP</a>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="frame-table">
+          <thead>
+            <tr>
+              <th data-col="timestamp">Timestamp <span class="sort-icon"></span></th>
+              <th data-col="frequency_mhz">Freq (MHz) <span class="sort-icon"></span></th>
+              <th data-col="rssi_dbm">RSSI (dBm) <span class="sort-icon"></span></th>
+              <th>Raw HEX</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody id="frame-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <button id="btn-prev" class="btn btn-ghost" disabled>← Prev</button>
+        <span id="page-info" class="muted"></span>
+        <button id="btn-next" class="btn btn-ghost" disabled>Next →</button>
+        <label class="page-size-label">
+          Per page
+          <select id="page-size">
+            <option value="25">25</option>
+            <option value="50" selected>50</option>
+            <option value="100">100</option>
+          </select>
+        </label>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/js/frames.js"></script>
+</body>
+</html>

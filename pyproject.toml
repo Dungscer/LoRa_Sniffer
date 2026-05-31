@@ -1,0 +1,25 @@
+[project]
+name = "rtl-sdr-listener"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "pyrtlsdr>=0.3.0",
+    "numpy>=1.20.0",
+    "matplotlib>=3.5.0",
+    "fastapi>=0.110.0",
+    "uvicorn>=0.29.0",
+    "jinja2>=3.1.0",
+    "aiosqlite>=0.19.0",
+    "pycryptodome>=3.18.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "black",
+    "pytest",
+    "httpx",
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]

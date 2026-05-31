@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RTL-SDR Listener</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header>
+    <span class="site-title">RTL-SDR Listener</span>
+    <nav>
+      <a href="/" class="active">Live</a>
+      <a href="/frames">Frames</a>
+    </nav>
+    <span id="ws-status" class="badge badge-warn">disconnected</span>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="card-header">
+        <span>Waterfall</span>
+        <span id="last-packet-info" class="muted"></span>
+        <span id="peak-info" class="muted" style="font-size:11px"></span>
+        <button onclick="saveWaterfall()">Save PNG</button>
+      </div>
+      <div class="waterfall-wrap">
+        <canvas id="waterfall"></canvas>
+        <div id="ch-labels"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <span>Recent frames <span id="frame-age" class="muted" style="font-size:11px;font-weight:400"></span></span>
+        <div class="actions">
+          <a href="/api/export" class="btn">Export ZIP (JSON + PCAP)</a>
+          <a href="/api/export/pcap" class="btn">Export PCAP</a>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="frame-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Freq (MHz)</th>
+              <th>RSSI (dBm)</th>
+              <th>MType</th>
+              <th>DevAddr / EUI</th>
+              <th>FCnt</th>
+              <th>Raw HEX</th>
+            </tr>
+          </thead>
+          <tbody id="frame-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header"><span>Settings</span></div>
+      <form id="settings-form" style="padding:0.8rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+        <label style="color:var(--muted);font-size:11px;display:flex;flex-direction:column;gap:0.2rem">
+          AppKey (hex, 32 chars = 16 bytes)
+          <input type="text" id="app-key-input" placeholder="00112233445566778899aabbccddeeff"
+                 maxlength="32" style="width:310px;font-family:var(--font);font-size:12px;
+                 background:var(--bg);border:1px solid var(--border);color:var(--text);
+                 padding:0.3rem 0.5rem;border-radius:4px">
+        </label>
+        <button type="submit" class="btn" style="align-self:flex-end">Save</button>
+        <span id="settings-msg" class="muted" style="align-self:flex-end"></span>
+      </form>
+    </section>
+  </main>
+
+  <script src="/static/js/waterfall.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
